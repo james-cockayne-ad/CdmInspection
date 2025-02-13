@@ -170,13 +170,18 @@ cdmInspection <- function (connectionDetails,
     # hadesPackageList <- read.table(packageListUrl, sep = ",", header = TRUE)
     # packages <- hadesPackageList$name
     # dump("packages", "")
+
+    allInstalledPackages <- rownames(installed.packages())
+
+    ParallelLogger::logInfo(paste0("All installed packages: ", paste(allInstalledPackages, collapse=", ")))
+
     packages <- c("CohortMethod", "SelfControlledCaseSeries", "SelfControlledCohort",
                   "EvidenceSynthesis", "PatientLevelPrediction", "EnsemblePatientLevelPrediction",
                   "Capr", "CirceR", "CohortGenerator", "PhenotypeLibrary", "EmpiricalCalibration",
                   "MethodEvaluation", "CohortDiagnostics", "Andromeda", "BigKnn",
                   "Cyclops", "DatabaseConnector", "Eunomia", "FeatureExtraction",
                   "Hydra", "OhdsiSharing", "ParallelLogger", "ROhdsiWebApi", "SqlRender")
-    diffPackages <- setdiff(packages, rownames(installed.packages()))
+    diffPackages <- setdiff(packages, rownames(allInstalledPackages))
     missingPackages <- paste(diffPackages, collapse=', ')
 
     if (length(diffPackages)>0){
